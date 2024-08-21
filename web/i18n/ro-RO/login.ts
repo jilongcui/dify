@@ -1,6 +1,6 @@
 const translation = {
   pageTitle: 'Bun venit! Hai să începem!👋',
-  welcome: 'Bine ai venit la Dify, te rugăm să te autentifici pentru a continua.',
+  welcome: 'Bine ai venit la MEDAI, te rugăm să te autentifici pentru a continua.',
   email: 'Adresă de email',
   emailPlaceholder: 'Adresa ta de email',
   password: 'Parolă',
