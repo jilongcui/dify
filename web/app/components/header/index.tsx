@@ -10,7 +10,6 @@ import AppNav from './app-nav'
 import DatasetNav from './dataset-nav'
 import EnvNav from './env-nav'
 import ExploreNav from './explore-nav'
-import ToolsNav from './tools-nav'
 import GithubStar from './github-star'
 import { WorkspaceProvider } from '@/context/workspace-context'
 import { useAppContext } from '@/context/app-context'
@@ -20,7 +19,7 @@ import { useProviderContext } from '@/context/provider-context'
 import { useModalContext } from '@/context/modal-context'
 
 const navClassName = `
-  flex items-center relative mr-0 sm:mr-3 px-3 h-8 rounded-xl
+  flex items-center relative mr-0 sm:mr-3 px-3 h-12
   font-medium text-sm
   cursor-pointer
 `
@@ -75,7 +74,7 @@ const Header = () => {
           {!isCurrentWorkspaceDatasetOperator && <ExploreNav className={navClassName} />}
           {!isCurrentWorkspaceDatasetOperator && <AppNav />}
           {(isCurrentWorkspaceEditor || isCurrentWorkspaceDatasetOperator) && <DatasetNav />}
-          {!isCurrentWorkspaceDatasetOperator && <ToolsNav className={navClassName} />}
+          {/* {!isCurrentWorkspaceDatasetOperator && <ToolsNav className={navClassName} />} */}
         </div>
       )}
       <div className='flex items-center flex-shrink-0'>
@@ -94,7 +93,7 @@ const Header = () => {
           {!isCurrentWorkspaceDatasetOperator && <ExploreNav className={navClassName} />}
           {!isCurrentWorkspaceDatasetOperator && <AppNav />}
           {(isCurrentWorkspaceEditor || isCurrentWorkspaceDatasetOperator) && <DatasetNav />}
-          {!isCurrentWorkspaceDatasetOperator && <ToolsNav className={navClassName} />}
+          {/* {!isCurrentWorkspaceDatasetOperator && <ToolsNav className={navClassName} />} */}
         </div>
       )}
     </div>

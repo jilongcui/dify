@@ -6,7 +6,6 @@ import { useSelectedLayoutSegment } from 'next/navigation'
 import type { INavSelectorProps } from './nav-selector'
 import NavSelector from './nav-selector'
 import classNames from '@/utils/classnames'
-import { ArrowNarrowLeft } from '@/app/components/base/icons/src/vender/line/arrows'
 import { useStore as useAppStore } from '@/app/components/app/store'
 
 type INavProps = {
@@ -38,22 +37,25 @@ const Nav = ({
 
   return (
     <div className={`
-      flex items-center h-8 mr-0 sm:mr-3 px-0.5 rounded-xl text-sm shrink-0 font-medium
-      ${isActived && 'bg-components-main-nav-nav-button-bg-active shadow-md font-semibold'}
-      ${!curNav && !isActived && 'hover:bg-components-main-nav-nav-button-bg-hover'}
+      flex items-center h-12 text-sm shrink-0 font-medium px-5
     `}>
+      {/* ${isActived && 'bg-components-main-nav-nav-button-bg-active shadow-md font-semibold'} */}
+      {/* ${!curNav && !isActived && 'hover:bg-components-main-nav-nav-button-bg-hover'} */}
       <Link href={link}>
         <div
           onClick={() => setAppDetail()}
           className={classNames(`
-            flex items-center h-7 px-2.5 cursor-pointer rounded-[10px]
-            ${isActived ? 'text-components-main-nav-nav-button-text-active' : 'text-components-main-nav-nav-button-text'}
-            ${curNav && isActived && 'hover:bg-components-main-nav-nav-button-bg-active-hover'}
+            flex items-center h-11 px-0 text-base cursor-pointer text-gray-50 min-w-25
+            ${!curNav && !isActived && 'hover:border-b-2 hover:border-gray-50'}
+            ${isActived && 'border-b-2 border-gray-50'}
           `)}
+          // ${isActived ? 'text-components-main-nav-nav-button-text-active' : 'text-components-main-nav-nav-button-text'}
+          // 'hover:bg-components-main-nav-nav-button-bg-active-hover'
+          // ${curNav && isActived && 'hover:boarder-2'}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <div className='mr-2'>
+          {/* <div className='mr-2'>
             {
               (hovered && curNav)
                 ? <ArrowNarrowLeft className='w-4 h-4' />
@@ -61,7 +63,7 @@ const Nav = ({
                   ? activeIcon
                   : icon
             }
-          </div>
+          </div> */}
           {text}
         </div>
       </Link>
