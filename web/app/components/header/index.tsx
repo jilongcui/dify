@@ -52,7 +52,7 @@ const Header = () => {
           className='flex items-center justify-center h-8 w-8 cursor-pointer'
           onClick={toggle}
         >
-          <Bars3Icon className="h-4 w-4 text-gray-500" />
+          <Bars3Icon className="h-4 w-4 text-gray-100" />
         </div>}
         {!isMobile && <>
           <Link href="/apps" className='flex items-center mr-4'>
@@ -89,7 +89,7 @@ const Header = () => {
         </WorkspaceProvider>
       </div>
       {(isMobile && isShowNavMenu) && (
-        <div className='w-full flex flex-col p-2 gap-y-1'>
+        <div className='flex flex-col p-2 gap-y-1'>
           {!isCurrentWorkspaceDatasetOperator && <ExploreNav className={navClassName} />}
           {!isCurrentWorkspaceDatasetOperator && <AppNav />}
           {(isCurrentWorkspaceEditor || isCurrentWorkspaceDatasetOperator) && <DatasetNav />}

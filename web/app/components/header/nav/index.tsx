@@ -37,7 +37,7 @@ const Nav = ({
 
   return (
     <div className={`
-      flex items-center h-12 text-sm shrink-0 font-medium px-5
+      flex items-center h-12 text-sm shrink-0 font-medium px-8
     `}>
       {/* ${isActived && 'bg-components-main-nav-nav-button-bg-active shadow-md font-semibold'} */}
       {/* ${!curNav && !isActived && 'hover:bg-components-main-nav-nav-button-bg-hover'} */}
