@@ -64,7 +64,7 @@ export default function AppSelector({ isMobile }: IAppSelector) {
                   className={`
                     inline-flex items-center
                     rounded-[20px] py-1 pr-2.5 pl-1 text-sm
-                  text-gray-700 hover:bg-gray-200
+                  text-gray-100 hover:text-gray-600 hover:bg-gray-200
                     mobile:px-1
                     ${open && 'bg-gray-200'}
                   `}
@@ -72,7 +72,7 @@ export default function AppSelector({ isMobile }: IAppSelector) {
                   <Avatar name={userProfile.name} className='sm:mr-2 mr-0' size={32} />
                   {!isMobile && <>
                     {userProfile.name}
-                    <RiArrowDownSLine className="w-3 h-3 ml-1 text-gray-700" />
+                    <RiArrowDownSLine className="w-3 h-3 ml-1 text-gray-200 hover:text-gray-600" />
                   </>}
                 </Menu.Button>
               </div>
