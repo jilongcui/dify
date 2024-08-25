@@ -113,7 +113,7 @@ const translation = {
   menus: {
     status: 'beta',
     explore: '首页',
-    apps: '工作室',
+    apps: '智能体',
     plugins: '插件',
     pluginsTips: '集成第三方插件或创建与 ChatGPT 兼容的 AI 插件。',
     datasets: '知识库',
