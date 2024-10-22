@@ -1,6 +1,6 @@
 const translation = {
   pageTitle: 'Hey, lass uns anfangen!👋',
-  welcome: 'Willkommen bei Dify, bitte melde dich an, um fortzufahren.',
+  welcome: 'Willkommen bei MEDAI, bitte melde dich an, um fortzufahren.',
   email: 'E-Mail-Adresse',
   emailPlaceholder: 'Deine E-Mail',
   password: 'Passwort',
