@@ -12,11 +12,17 @@ class PubMedProvider(BuiltinToolProviderController):
                 runtime={
                     "credentials": credentials,
                 }
-            ).invoke(
-                user_id="",
-                tool_parameters={
+            ).validate_credentials(
+                credentials=credentials,
+                parameters={
                     "query": "John Doe",
                 },
             )
+            # .invoke(
+            #     user_id="",
+            #     tool_parameters={
+            #         "query": "John Doe",
+            #     },
+            # )
         except Exception as e:
             raise ToolProviderCredentialValidationError(str(e))

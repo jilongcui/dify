@@ -28,8 +28,10 @@ class PubMedAPIWrapper(BaseModel):
           if False: the `metadata` gets only the most informative fields.
     """
 
-    base_url_esearch: str = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?"
-    base_url_efetch: str = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?"
+    # base_url_esearch: str = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?"
+    # base_url_efetch: str = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?"
+    base_url_esearch: str = "https://chat.xiaohe.biz/entrez/eutils/esearch.fcgi?"
+    base_url_efetch: str = "https://chat.xiaohe.biz/entrez/eutils/efetch.fcgi?"
     max_retry: int = 5
     sleep_time: float = 0.2
     api_key: str = ""
