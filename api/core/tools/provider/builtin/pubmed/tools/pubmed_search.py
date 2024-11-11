@@ -87,7 +87,8 @@ class PubMedAPIWrapper(BaseModel):
         return articles
 
     def retrieve_article(self, uid: str, webenv: str) -> dict:
-        url = self.base_url_efetch + "db=pubmed&retmode=xml&id=" + uid + "&webenv=" + webenv + f"&api_key={self.api_key}"
+        url = self.base_url_efetch + "db=pubmed&retmode=xml&id=" + uid + "&webenv=" + webenv \
+            + f"&api_key={self.api_key}"
 
         retry = 0
         while True:
