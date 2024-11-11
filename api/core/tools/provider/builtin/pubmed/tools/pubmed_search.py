@@ -152,13 +152,14 @@ class PubmedQueryRun(BaseModel):
         "Input should be a search query."
     )
     api_wrapper: PubMedAPIWrapper = Field(default_factory=PubMedAPIWrapper)
+
     def _run(
         self,
         query: str,
+        api_key: str,
     ) -> str:
-        self.api_key = self.runtime.credentials["pubmed_api_key"]
         """Use the Arxiv tool."""
-        return self.api_wrapper.run(query)
+        return self.api_wrapper.run(query, api_key)
 
 
 class PubMedInput(BaseModel):
@@ -182,12 +183,13 @@ class PubMedSearchTool(BuiltinTool):
             ToolInvokeMessage | list[ToolInvokeMessage]: The result of the tool invocation.
         """
         query = tool_parameters.get("query", "")
+        api_key = self.runtime.credentials["pubmed_api_key"]
 
         if not query:
             return self.create_text_message("Please input query")
 
         tool = PubmedQueryRun(args_schema=PubMedInput)
 
-        result = tool._run(query)
+        result = tool._run(query, api_key)
 
         return self.create_text_message(self.summary(user_id=user_id, content=result))
