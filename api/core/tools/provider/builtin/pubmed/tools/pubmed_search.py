@@ -41,26 +41,26 @@ class PubMedAPIWrapper(BaseModel):
     load_all_available_meta: bool = False
     email: str = "jilongcui@163.com"
 
-    def run(self, query: str) -> str:
+    def run(self, query: str, api_key: str) -> str:
         """
         Run PubMed search and get the article meta information.
         See https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch
         It uses only the most informative fields of article meta information.
         """
-        self.api_key = self.runtime.credentials["pubmed_api_key"]
+        self.api_key = api_key
+
         try:
             # Retrieve the top-k results for the query
             docs = [
                 f"Published: {result['pub_date']}\nTitle: {result['title']}\nSummary: {result['summary']}"
-                for result in self.load(query[: self.ARXIV_MAX_QUERY_LENGTH])
+                for result in self.load(query[: self.ARXIV_MAX_QUERY_LENGTH], self.api_key)
             ]
-
             # Join the results and limit the character count
             return "\n\n".join(docs)[: self.doc_content_chars_max] if docs else "No good PubMed Result was found"
         except Exception as ex:
             return f"PubMed exception: {ex}"
 
-    def load(self, query: str) -> list[dict]:
+    def load(self, query: str, api_key: str) -> list[dict]:
         """
         Search PubMed for documents matching the query.
         Return a list of dictionaries containing the document metadata.
@@ -152,11 +152,11 @@ class PubmedQueryRun(BaseModel):
         "Input should be a search query."
     )
     api_wrapper: PubMedAPIWrapper = Field(default_factory=PubMedAPIWrapper)
-
     def _run(
         self,
         query: str,
     ) -> str:
+        self.api_key = self.runtime.credentials["pubmed_api_key"]
         """Use the Arxiv tool."""
         return self.api_wrapper.run(query)
 
