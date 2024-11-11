@@ -11,3 +11,20 @@ identity:
   tags:
     - medical
     - search
+credentials_for_provider:
+  pubmed_api_key:
+    type: secret-input
+    required: true
+    label:
+      en_US: PubMed API key
+      zh_Hans: PubMed API key
+      pt_BR: PubMed API key
+    placeholder:
+      en_US: Please input your PubMed API key
+      zh_Hans: 请输入你的 PubMed API key
+      pt_BR: Please input your PubMed API key
+    help:
+      en_US: Get your PubMed API key from PubMed
+      zh_Hans: 从 PubMed 获取您的 PubMed API key
+      pt_BR: Get your PubMed API key from PubMed
+    url: https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/

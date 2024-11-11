@@ -32,14 +32,14 @@ class PubMedAPIWrapper(BaseModel):
     base_url_efetch: str = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?"
     max_retry: int = 5
     sleep_time: float = 0.2
-
+    api_key: str = ""
     # Default values for the parameters
     top_k_results: int = 3
     load_max_docs: int = 25
     ARXIV_MAX_QUERY_LENGTH: int = 300
     doc_content_chars_max: int = 2000
     load_all_available_meta: bool = False
-    email: str = "your_email@example.com"
+    email: str = "jilongcui@163.com"
 
     def run(self, query: str) -> str:
         """
@@ -47,7 +47,7 @@ class PubMedAPIWrapper(BaseModel):
         See https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch
         It uses only the most informative fields of article meta information.
         """
-
+        self.api_key = self.runtime.credentials["pubmed_api_key"]
         try:
             # Retrieve the top-k results for the query
             docs = [
@@ -71,6 +71,7 @@ class PubMedAPIWrapper(BaseModel):
             + "db=pubmed&term="
             + str({urllib.parse.quote(query)})
             + f"&retmode=json&retmax={self.top_k_results}&usehistory=y"
+            + f"&api_key={self.api_key}"
         )
         result = urllib.request.urlopen(url)
         text = result.read().decode("utf-8")
@@ -86,7 +87,7 @@ class PubMedAPIWrapper(BaseModel):
         return articles
 
     def retrieve_article(self, uid: str, webenv: str) -> dict:
-        url = self.base_url_efetch + "db=pubmed&retmode=xml&id=" + uid + "&webenv=" + webenv
+        url = self.base_url_efetch + "db=pubmed&retmode=xml&id=" + uid + "&webenv=" + webenv + f"&api_key={self.api_key}"
 
         retry = 0
         while True:
