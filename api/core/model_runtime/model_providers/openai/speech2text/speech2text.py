@@ -57,7 +57,7 @@ class OpenAISpeech2TextModel(_CommonOpenAI, Speech2TextModel):
         # init model client
         client = OpenAI(**credentials_kwargs)
 
-        response = client.audio.transcriptions.create(model=model, file=file)
+        response = client.audio.transcriptions.create(model=model, file=file, temperature=0.1, language="zh")
 
         return response.text
 
