@@ -1,4 +1,5 @@
 import os
+from collections import UserDict
 from typing import Union
 from unittest.mock import MagicMock
 
@@ -8,7 +9,7 @@ from tos import TosClientV2
 from tos.clientv2 import DeleteObjectOutput, GetObjectOutput, HeadObjectOutput, PutObjectOutput
 
 
-class AttrDict(dict):
+class AttrDict(UserDict):
     def __getattr__(self, item):
         return self.get(item)
 
