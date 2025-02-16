@@ -46,3 +46,15 @@ export type AppConversationData = {
   has_more: boolean
   limit: number
 }
+
+export type DatasetDocument = {
+  id: ConversationItem[]
+  name: boolean
+  size: number
+  extension: string
+  url: string
+  download_url: string
+  mime_type: string
+  created_by: string
+  created_at: number
+}

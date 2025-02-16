@@ -9,6 +9,7 @@ import type {
   AppData,
   AppMeta,
   ConversationItem,
+  DatasetDocument,
 } from '@/models/share'
 import type { ChatConfig } from '@/app/components/base/chat/types'
 import type { SystemFeatures } from '@/types/feature'
@@ -218,6 +219,10 @@ export const textToAudio = (url: string, isPublicAPI: boolean, body: FormData) =
 
 export const textToAudioStream = (url: string, isPublicAPI: boolean, header: { content_type: string }, body: { streaming: boolean; voice?: string; message_id?: string; text?: string | null | undefined }) => {
   return (getAction('post', !isPublicAPI))(url, { body, header }, { needAllResponseContent: true })
+}
+
+export const fetchDatasetDocument = (dataset_id: string, document_id: string, isInstalledApp: boolean, installedAppId = '') => {
+  return (getAction('get', isInstalledApp))(getUrl(`/datasets/${dataset_id}/documents/${document_id}/upload-file`, isInstalledApp, installedAppId)) as Promise<DatasetDocument>
 }
 
 export const fetchAccessToken = async (appCode: string) => {

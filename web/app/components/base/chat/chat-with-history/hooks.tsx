@@ -26,6 +26,7 @@ import {
   fetchAppParams,
   fetchChatList,
   fetchConversations,
+  fetchDatasetDocument,
   generationConversationName,
   pinConversation,
   renameConversation,
@@ -132,11 +133,30 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
     return currentConversationId
   }, [currentConversationId, newConversationId])
 
+  const [datasetId, setDatasetId] = useState('')
+  const [documentId, setDocumentId] = useState('')
+
+  const [previewUrl, setPreviewUrl] = useState('')
+  const [documentType, setDocumentType] = useState('')
+
   const { data: appParams } = useSWR(['appParams', isInstalledApp, appId], () => fetchAppParams(isInstalledApp, appId))
   const { data: appMeta } = useSWR(['appMeta', isInstalledApp, appId], () => fetchAppMeta(isInstalledApp, appId))
   const { data: appPinnedConversationData, mutate: mutateAppPinnedConversationData } = useSWR(['appConversationData', isInstalledApp, appId, true], () => fetchConversations(isInstalledApp, appId, undefined, true, 100))
   const { data: appConversationData, isLoading: appConversationDataLoading, mutate: mutateAppConversationData } = useSWR(['appConversationData', isInstalledApp, appId, false], () => fetchConversations(isInstalledApp, appId, undefined, false, 100))
   const { data: appChatListData, isLoading: appChatListDataLoading } = useSWR(chatShouldReloadKey ? ['appChatList', chatShouldReloadKey, isInstalledApp, appId] : null, () => fetchChatList(chatShouldReloadKey, isInstalledApp, appId))
+
+  const { data: datasetDocument } = useSWR((datasetId && documentId) ? ['datasetDocument', datasetId, documentId, isInstalledApp, appId] : null, () => fetchDatasetDocument(datasetId, documentId, isInstalledApp, appId))
+
+  useEffect(() => {
+    if (datasetDocument?.url) {
+      setPreviewUrl(datasetDocument?.url)
+      setDocumentType(datasetDocument?.extension)
+    }
+    else {
+      setPreviewUrl('')
+      setDocumentType('')
+    }
+  }, [datasetDocument])
 
   const appPrevChatTree = useMemo(
     () => (currentConversationId && appChatListData?.data.length)
@@ -153,6 +173,7 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
   const { t } = useTranslation()
   const newConversationInputsRef = useRef<Record<string, any>>({})
   const [newConversationInputs, setNewConversationInputs] = useState<Record<string, any>>({})
+  const [currentPdfUrl, setCurrentPdfUrl] = useState(null)
   const handleNewConversationInputsChange = useCallback((newInputs: Record<string, any>) => {
     newConversationInputsRef.current = newInputs
     setNewConversationInputs(newInputs)
@@ -427,6 +448,9 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
     appData,
     appParams: appParams || {} as ChatConfig,
     appMeta,
+    previewUrl,
+    documentType,
+    setPreviewUrl,
     appPinnedConversationData,
     appConversationData,
     appConversationDataLoading,
@@ -456,5 +480,10 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
     chatShouldReloadKey,
     handleFeedback,
     currentChatInstanceRef,
+    datasetId,
+    setDatasetId,
+    documentId,
+    setDocumentId,
+    setDocumentType,
   }
 }

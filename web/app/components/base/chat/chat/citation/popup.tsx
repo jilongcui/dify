@@ -1,25 +1,13 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import type { FC } from 'react'
-import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
-import Tooltip from './tooltip'
-import ProgressTooltip from './progress-tooltip'
+import { useChatWithHistoryContext } from '../../chat-with-history/context'
 import type { Resources } from './index'
 import {
   PortalToFollowElem,
-  PortalToFollowElemContent,
   PortalToFollowElemTrigger,
 } from '@/app/components/base/portal-to-follow-elem'
 import FileIcon from '@/app/components/base/file-icon'
-import {
-  Hash02,
-  Target04,
-} from '@/app/components/base/icons/src/vender/line/general'
-import { ArrowUpRight } from '@/app/components/base/icons/src/vender/line/arrows'
-import {
-  BezierCurve03,
-  TypeSquare,
-} from '@/app/components/base/icons/src/vender/line/editor'
 
 type PopupProps = {
   data: Resources
@@ -30,12 +18,22 @@ const Popup: FC<PopupProps> = ({
   data,
   showHitInfo = false,
 }) => {
+  const {
+    setDocumentId,
+    setDatasetId,
+    isMobile,
+  } = useChatWithHistoryContext()
+
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const fileType = data.dataSourceType !== 'notion'
     ? (/\.([^.]*)$/g.exec(data.documentName)?.[1] || '')
     : 'notion'
-
+  const onclick = () => {
+    setOpen(v => !v)
+    setDatasetId(data.datasetId)
+    setDocumentId(data.documentId)
+  }
   return (
     <PortalToFollowElem
       open={open}
@@ -46,13 +44,13 @@ const Popup: FC<PopupProps> = ({
         crossAxis: -2,
       }}
     >
-      <PortalToFollowElemTrigger onClick={() => setOpen(v => !v)}>
+      <PortalToFollowElemTrigger onClick={onclick}>
         <div className='flex items-center px-2 max-w-[240px] h-7 bg-white rounded-lg'>
           <FileIcon type={fileType} className='shrink-0 mr-1 w-4 h-4' />
           <div className='text-xs text-gray-600 truncate'>{data.documentName}</div>
         </div>
       </PortalToFollowElemTrigger>
-      <PortalToFollowElemContent style={{ zIndex: 1000 }}>
+      {/* <PortalToFollowElemContent style={{ zIndex: 1000 }}>
         <div className='max-w-[360px] bg-gray-50 rounded-xl shadow-lg'>
           <div className='px-4 pt-3 pb-2'>
             <div className='flex items-center h-[18px]'>
@@ -123,7 +121,7 @@ const Popup: FC<PopupProps> = ({
             </div>
           </div>
         </div>
-      </PortalToFollowElemContent>
+      </PortalToFollowElemContent> */}
     </PortalToFollowElem>
   )
 }

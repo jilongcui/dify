@@ -14,6 +14,7 @@ import Sidebar from './sidebar'
 import HeaderInMobile from './header-in-mobile'
 import ConfigPanel from './config-panel'
 import ChatWrapper from './chat-wrapper'
+import InnerPdfPreview from './inner-pdf-preview'
 import type { InstalledApp } from '@/models/explore'
 import Loading from '@/app/components/base/loading'
 import useBreakpoints, { MediaType } from '@/hooks/use-breakpoints'
@@ -34,6 +35,9 @@ const ChatWithHistory: FC<ChatWithHistoryProps> = ({
     showConfigPanelBeforeChat,
     appChatListDataLoading,
     chatShouldReloadKey,
+    previewUrl,
+    documentType,
+    setDocumentId,
     isMobile,
     themeBuilder,
   } = useChatWithHistoryContext()
@@ -76,7 +80,7 @@ const ChatWithHistory: FC<ChatWithHistoryProps> = ({
           <HeaderInMobile />
         )
       }
-      <div className={`grow overflow-hidden ${showConfigPanelBeforeChat && !appPrevChatTree.length && 'flex items-center justify-center'}`}>
+      <div className={`flex-grow overflow-hidden ${showConfigPanelBeforeChat && !appPrevChatTree.length && 'flex items-center justify-center'}`}>
         {
           showConfigPanelBeforeChat && !appChatListDataLoading && !appPrevChatTree.length && (
             <div className={`flex w-full items-center justify-center h-full ${isMobile && 'px-4'}`}>
@@ -95,6 +99,15 @@ const ChatWithHistory: FC<ChatWithHistoryProps> = ({
           )
         }
       </div>
+
+      {
+        !isMobile && previewUrl && (documentType === 'pdf') && (
+          <div className="fixed relative inset-0 flex w-[700px] h-full border-l border-gray-200">
+            <InnerPdfPreview url={previewUrl} onCancel={() => { setDocumentId('') }} />
+          </div>
+        )
+      }
+
     </div>
   )
 }
@@ -117,6 +130,12 @@ const ChatWithHistoryWrap: FC<ChatWithHistoryWrapProps> = ({
     appData,
     appParams,
     appMeta,
+    previewUrl,
+    setPreviewUrl,
+    setDatasetId,
+    setDocumentId,
+    documentType,
+    setDocumentType,
     appChatListDataLoading,
     currentConversationId,
     currentConversationItem,
@@ -151,6 +170,12 @@ const ChatWithHistoryWrap: FC<ChatWithHistoryWrapProps> = ({
       appData,
       appParams,
       appMeta,
+      previewUrl,
+      setPreviewUrl,
+      setDatasetId,
+      setDocumentId,
+      documentType,
+      setDocumentType,
       appChatListDataLoading,
       currentConversationId,
       currentConversationItem,

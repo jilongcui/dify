@@ -14,6 +14,7 @@ import type {
   AppData,
   AppMeta,
   ConversationItem,
+  DatasetDocument,
 } from '@/models/share'
 
 export type ChatWithHistoryContextValue = {
@@ -25,6 +26,14 @@ export type ChatWithHistoryContextValue = {
   appChatListDataLoading?: boolean
   currentConversationId: string
   currentConversationItem?: ConversationItem
+  currentDocumentId?: string
+  previewUrl?: string
+  documentType?: string
+  setPreviewUrl: (url: string) => void
+  setDocumentId: (documentId: string) => void
+  setDocumentType: (documentType: string) => void
+  setDatasetId: (datasetId: string) => void
+  datasetDocument?: DatasetDocument
   appPrevChatTree: ChatItemInTree[]
   pinnedConversationList: AppConversationData['data']
   conversationList: AppConversationData['data']
@@ -53,6 +62,13 @@ export type ChatWithHistoryContextValue = {
 
 export const ChatWithHistoryContext = createContext<ChatWithHistoryContextValue>({
   currentConversationId: '',
+  currentDocumentId: '',
+  previewUrl: '',
+  documentType: '',
+  setPreviewUrl: () => {},
+  setDatasetId: () => {},
+  setDocumentId: () => {},
+  setDocumentType: () => {},
   appPrevChatTree: [],
   pinnedConversationList: [],
   conversationList: [],

@@ -6,6 +6,7 @@ import type { CitationItem } from '../type'
 import Popup from './popup'
 
 export type Resources = {
+  datasetId: string
   documentId: string
   documentName: string
   dataSourceType: string
@@ -27,6 +28,7 @@ const Citation: FC<CitationProps> = ({
   const [limitNumberInOneLine, setLimitNumberInOneLine] = useState(0)
   const [showMore, setShowMore] = useState(false)
   const resources = useMemo(() => data.reduce((prev: Resources[], next) => {
+    const datasetId = next.dataset_id
     const documentId = next.document_id
     const documentName = next.document_name
     const dataSourceType = next.data_source_type
@@ -37,6 +39,7 @@ const Citation: FC<CitationProps> = ({
     }
     else {
       prev.push({
+        datasetId,
         documentId,
         documentName,
         dataSourceType,
