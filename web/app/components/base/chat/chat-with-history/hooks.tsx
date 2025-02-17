@@ -145,7 +145,7 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
   const { data: appConversationData, isLoading: appConversationDataLoading, mutate: mutateAppConversationData } = useSWR(['appConversationData', isInstalledApp, appId, false], () => fetchConversations(isInstalledApp, appId, undefined, false, 100))
   const { data: appChatListData, isLoading: appChatListDataLoading } = useSWR(chatShouldReloadKey ? ['appChatList', chatShouldReloadKey, isInstalledApp, appId] : null, () => fetchChatList(chatShouldReloadKey, isInstalledApp, appId))
 
-  const { data: datasetDocument } = useSWR((datasetId && documentId) ? ['datasetDocument', datasetId, documentId, isInstalledApp, appId] : null, () => fetchDatasetDocument(datasetId, documentId, isInstalledApp, appId))
+  const { data: datasetDocument } = useSWR((datasetId && documentId) ? ['datasetDocument', datasetId, documentId, isInstalledApp, appId] : null, () => fetchDatasetDocument(datasetId, documentId, isInstalledApp, appId), { revalidateOnFocus: false })
 
   useEffect(() => {
     if (datasetDocument?.url) {
@@ -156,7 +156,7 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
       setPreviewUrl('')
       setDocumentType('')
     }
-  }, [datasetDocument])
+  }, [datasetDocument?.url])
 
   const appPrevChatTree = useMemo(
     () => (currentConversationId && appChatListData?.data.length)
