@@ -145,8 +145,21 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
   const { data: appConversationData, isLoading: appConversationDataLoading, mutate: mutateAppConversationData } = useSWR(['appConversationData', isInstalledApp, appId, false], () => fetchConversations(isInstalledApp, appId, undefined, false, 100))
   const { data: appChatListData, isLoading: appChatListDataLoading } = useSWR(chatShouldReloadKey ? ['appChatList', chatShouldReloadKey, isInstalledApp, appId] : null, () => fetchChatList(chatShouldReloadKey, isInstalledApp, appId))
 
-  const { data: datasetDocument } = useSWR((datasetId && documentId) ? ['datasetDocument', datasetId, documentId, isInstalledApp, appId] : null, () => fetchDatasetDocument(datasetId, documentId, isInstalledApp, appId), { revalidateOnFocus: false })
+  // const { data: datasetDocument } = useSWR((datasetId && documentId) ? ['datasetDocument', datasetId, documentId, isInstalledApp, appId] : null, () => fetchDatasetDocument(datasetId, documentId, isInstalledApp, appId), { revalidateOnFocus: false })
 
+  const fetcher = useCallback(() => {
+    return fetchDatasetDocument(datasetId, documentId, isInstalledApp, appId)
+  }, [datasetId, documentId, isInstalledApp, appId])
+
+  const { data: datasetDocument } = useSWR(
+    documentId ? ['datasetDocument', documentId] : null,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      dedupingInterval: 10000,
+    },
+  )
   useEffect(() => {
     if (datasetDocument?.url) {
       setPreviewUrl(datasetDocument?.url)

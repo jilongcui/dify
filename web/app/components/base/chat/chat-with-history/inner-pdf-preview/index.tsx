@@ -4,8 +4,8 @@ import 'react-pdf-highlighter/dist/style.css'
 import { t } from 'i18next'
 import { RiCloseLine, RiZoomInLine, RiZoomOutLine } from '@remixicon/react'
 import React, { useState } from 'react'
-// import useBreakpoints, { MediaType } from '@/hooks/use-breakpoints';
 import { useChatWithHistoryContext } from '../context'
+import useBreakpoints from '@/hooks/use-breakpoints'
 import Tooltip from '@/app/components/base/tooltip'
 import Loading from '@/app/components/base/loading'
 
@@ -15,7 +15,7 @@ type InnerPdfPreviewProps = {
 }
 
 const InnerPdfPreview: FC<InnerPdfPreviewProps> = ({ url, onCancel }) => {
-  // const media = useBreakpoints();
+  const media = useBreakpoints()
   const [scale, setScale] = useState(1)
 
   const {
