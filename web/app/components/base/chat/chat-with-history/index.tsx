@@ -20,6 +20,7 @@ import Loading from '@/app/components/base/loading'
 import useBreakpoints, { MediaType } from '@/hooks/use-breakpoints'
 import { checkOrSetAccessToken } from '@/app/components/share/utils'
 import AppUnavailable from '@/app/components/base/app-unavailable'
+import DynamicPdfPreview from '@/app/components/base/file-uploader/dynamic-pdf-preview'
 
 type ChatWithHistoryProps = {
   className?: string
@@ -105,6 +106,12 @@ const ChatWithHistory: FC<ChatWithHistoryProps> = ({
           <div className="fixed relative inset-0 flex w-[700px] h-full border-l border-gray-200">
             <InnerPdfPreview url={previewUrl} onCancel={() => { setDocumentId('') }} />
           </div>
+        )
+      }
+
+      {
+        isMobile && previewUrl && (documentType === 'pdf') && (
+          <DynamicPdfPreview url={previewUrl} onCancel={() => { setDocumentId('') }} />
         )
       }
 
