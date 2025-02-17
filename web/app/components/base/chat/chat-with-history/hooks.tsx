@@ -152,7 +152,7 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
   }, [datasetId, documentId, isInstalledApp, appId])
 
   const { data: datasetDocument } = useSWR(
-    (datasetId && documentId) ? ['datasetDocument', documentId] : null,
+    (datasetId && documentId) ? ['datasetDocument'] : null,
     fetcher,
     {
       revalidateIfStale: false,
