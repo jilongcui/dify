@@ -111,7 +111,7 @@ const ChatWithHistory: FC<ChatWithHistoryProps> = ({
       }
 
       {
-        !!isMobile && previewUrl && (documentType === 'pdf') && (
+        isMobile && previewUrl && (documentType === 'pdf') && (
           <DynamicPdfPreview url={previewUrl} onCancel={() => { setDocumentId('') }} />
         )
       }

@@ -152,7 +152,7 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
   }, [datasetId, documentId, isInstalledApp, appId])
 
   const { data: datasetDocument } = useSWR(
-    (datasetId && documentId) ? ['datasetDocument'] : null,
+    (datasetId && documentId) ? ['datasetDocument', documentId] : null,
     fetcher,
     {
       revalidateIfStale: false,
@@ -164,8 +164,11 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
 
   useEffect(() => {
     console.log('previewUrl', previewUrl)
-    if (!datasetDocument?.url)
+    console.log('datasetDocument.url', datasetDocument?.url)
+    if (!datasetDocument?.url) {
+      setPreviewUrl('')
       return // 如果 previewUrl 不存在，则不执行下载
+    }
 
     const fetchPdf = async () => {
       // setIsLoading(true);
