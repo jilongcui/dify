@@ -152,24 +152,57 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
   }, [datasetId, documentId, isInstalledApp, appId])
 
   const { data: datasetDocument } = useSWR(
-    documentId ? ['datasetDocument', documentId] : null,
+    (datasetId && documentId) ? ['datasetDocument', documentId] : null,
     fetcher,
     {
+      revalidateIfStale: false,
       revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      dedupingInterval: 10000,
+      // revalidateOnReconnect: false,
+      // dedupingInterval: 10000, // 可以根据需要设置更长时间
     },
   )
+
   useEffect(() => {
-    if (datasetDocument?.url) {
-      setPreviewUrl(datasetDocument?.url)
-      setDocumentType(datasetDocument?.extension)
+    console.log('previewUrl', previewUrl)
+    if (!datasetDocument?.url)
+      return // 如果 previewUrl 不存在，则不执行下载
+
+    const fetchPdf = async () => {
+      // setIsLoading(true);
+      // setError(null);
+
+      try {
+        const response = await fetch(datasetDocument?.url)
+        if (!response.ok)
+          throw new Error('Failed to fetch PDF')
+
+        const blob = await response.blob() // 获取 PDF 文件的 Blob 对象
+        const url = URL.createObjectURL(blob) // 生成 Blob URL
+        setPreviewUrl(url) // 存储 Blob URL
+        setDocumentType(datasetDocument?.extension || '')
+      }
+      catch (err) {
+        // setError(err.message);
+      }
+      finally {
+        // setIsLoading(false);
+      }
     }
-    else {
-      setPreviewUrl('')
-      setDocumentType('')
-    }
-  }, [datasetDocument?.url])
+
+    fetchPdf()
+  }, [datasetDocument?.url]) // 当 previewUrl 变化时重新下载
+
+  // useEffect(() => {
+  //   if (datasetDocument?.url) {
+  //     setPreviewUrl('')
+  //     setPreviewUrl(datasetDocument?.url)
+  //     setDocumentType(datasetDocument?.extension)
+  //   }
+  //   else {
+  //     setPreviewUrl('')
+  //     setDocumentType('')
+  //   }
+  // }, [datasetDocument?.url])
 
   const appPrevChatTree = useMemo(
     () => (currentConversationId && appChatListData?.data.length)
