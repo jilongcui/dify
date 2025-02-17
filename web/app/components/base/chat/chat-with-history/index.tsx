@@ -105,14 +105,14 @@ const ChatWithHistory: FC<ChatWithHistoryProps> = ({
       {
         !isMobile && previewUrl && (documentType === 'pdf') && (
           <div className="fixed relative inset-0 flex w-[700px] h-full border-l border-gray-200">
-            <InnerPdfPreview url={previewUrl} onCancel={() => { setPreviewUrl('') }} />
+            <InnerPdfPreview url={previewUrl} onCancel={() => { setDocumentId('') }} />
           </div>
         )
       }
 
       {
         !!isMobile && previewUrl && (documentType === 'pdf') && (
-          <DynamicPdfPreview url={previewUrl} onCancel={() => { setPreviewUrl('') }} />
+          <DynamicPdfPreview url={previewUrl} onCancel={() => { setDocumentId('') }} />
         )
       }
 
