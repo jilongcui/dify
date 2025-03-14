@@ -153,14 +153,14 @@ const Apps = () => {
         </div>
       </div>
       {(data && data[0].total > 0)
-        ? <div className='grid content-start grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 2k:grid-cols-6 gap-4 px-12 pt-2 grow relative'>
+        ? <div className='grid content-start grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 2k:grid-cols-5 gap-8 px-12 pt-2 grow relative'>
           {isCurrentWorkspaceEditor
             && <NewAppCard onSuccess={mutate} />}
           {data.map(({ data: apps }) => apps.map(app => (
             <AppCard key={app.id} app={app} onRefresh={mutate} />
           )))}
         </div>
-        : <div className='grid content-start grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 2k:grid-cols-6 gap-4 px-12 pt-2 grow relative overflow-hidden'>
+        : <div className='grid content-start grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 2k:grid-cols-5 gap-8 px-12 pt-2 grow relative overflow-hidden'>
           {isCurrentWorkspaceEditor
             && <NewAppCard className='z-10' onSuccess={mutate} />}
           <NoAppsFound />
