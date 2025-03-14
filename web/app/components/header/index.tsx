@@ -5,6 +5,7 @@ import { useBoolean } from 'ahooks'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { Bars3Icon } from '@heroicons/react/20/solid'
 import { useContextSelector } from 'use-context-selector'
+import { useTranslation } from 'react-i18next'
 import HeaderBillingBtn from '../billing/header-billing-btn'
 import AccountDropdown from './account-dropdown'
 import AppNav from './app-nav'
@@ -38,6 +39,7 @@ const Header = () => {
   const { enableBilling, plan } = useProviderContext()
   const { setShowPricingModal, setShowAccountSettingModal } = useModalContext()
   const isFreePlan = plan.type === 'sandbox'
+  const { t } = useTranslation()
   const handlePlanClick = useCallback(() => {
     if (isFreePlan)
       setShowPricingModal()
@@ -62,6 +64,7 @@ const Header = () => {
           <Link href="/apps" className='flex items-center mr-4'>
             <LogoSite className='object-contain' />
           </Link>
+          <p className='text-text-primary title-3xl-semi-bold'>{t('common.main.siteName')}</p>
           {systemFeatures.license.status === LicenseStatus.NONE && <GithubStar />}
         </>}
       </div>
@@ -70,6 +73,7 @@ const Header = () => {
           <Link href="/apps" className='flex items-center mr-4'>
             <LogoSite />
           </Link>
+          <p className='text-text-primary title-3xl-semi-bold'>{t('common.main.siteName')}</p>
           {systemFeatures.license.status === LicenseStatus.NONE && <GithubStar />}
         </div>
       )}

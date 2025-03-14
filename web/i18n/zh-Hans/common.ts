@@ -128,6 +128,11 @@ const translation = {
     },
     addMoreModel: '添加更多模型',
   },
+  main: {
+    siteName: '南京大学分子医学人工智能试验平台',
+    title: 'MedAI',
+    description: 'MedAI 是一个智能助手平台，它使用 MedAI 模型来生成文本和图像。MedAI 模型由 MedAI 团队开发，并使用开源的模型库和开源的代码。MedAI 模型支持中文和英文，并且可以生成文本和图像。MedAI 模型支持中文和英文，并且可以生成文本和图像。MedAI 模型支持中文和英文，并且可以生成文本和图像。MedAI 模型支持中文和英文，并且可以生成文本和图像',
+  },
   menus: {
     status: 'beta',
     explore: '探索',
